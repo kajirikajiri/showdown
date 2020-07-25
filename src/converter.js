@@ -353,10 +353,12 @@ showdown.Converter = function (converterOptions) {
     // if (globals.timeList.length > 0) {
     //   console.log(globals.timeList);
     // }
+    console.log(options);
     if (options.returnArray) {
       return [text, globals.timeList];
+    } else {
+      return text;
     }
-    return text;
   };
 
   /**
