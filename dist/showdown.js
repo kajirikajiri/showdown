@@ -162,6 +162,11 @@ function getDefaultOpts (simple) {
       defaultValue: false,
       description: 'Split adjacent blockquote blocks',
       type: 'boolean'
+    },
+    returnArray: {
+      defaultValue: false,
+      description: 'return [text, timeList]',
+      type: 'boolean'
     }
   };
   if (simple === false) {
