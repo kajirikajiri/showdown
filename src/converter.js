@@ -350,11 +350,7 @@ showdown.Converter = function (converterOptions) {
 
     // update metadata
     metadata = globals.metadata;
-    // if (globals.timeList.length > 0) {
-    //   console.log(globals.timeList);
-    // }
-    console.log(options);
-    if (options.returnArray) {
+    if (globals.timeList.length > 0) {
       return [text, globals.timeList];
     } else {
       return text;
