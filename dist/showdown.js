@@ -1,4 +1,4 @@
-;/*! showdown v 2.0.0-alpha1 - 24-10-2018 */
+;/*! showdown v 2.0.0-alpha1 - 25-07-2020 */
 (function(){
 /**
  * Created by Tivie on 13-07-2015.
@@ -161,6 +161,11 @@ function getDefaultOpts (simple) {
     splitAdjacentBlockquotes: {
       defaultValue: false,
       description: 'Split adjacent blockquote blocks',
+      type: 'boolean'
+    },
+    returnArray: {
+      defaultValue: false,
+      description: 'return [text, timeList]',
       type: 'boolean'
     }
   };
@@ -2530,8 +2535,9 @@ showdown.subParser('makehtml.ellipsis', function (text, options, globals) {
 });
 
 /**
- * These are all the transformations that occur *within* block-level
- * tags like paragraphs, headers, and list items.
+ * Turn emoji codes into emojis
+ *
+ * List of supported emojis: https://github.com/showdownjs/showdown/wiki/Emojis
  */
 showdown.subParser('makehtml.emoji', function (text, options, globals) {
   'use strict';
@@ -2970,6 +2976,11 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
   var atxStyle = (options.requireSpaceBeforeHeadingText) ? /^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gm : /^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gm;
 
   text = text.replace(atxStyle, function (wholeMatch, m1, m2) {
+    var matchDoubleCurly = m2.match(/\{{2}\s*[0-9]+\s*}{2}/);
+    if (matchDoubleCurly) {
+      var replacedMatchDoubleCurly = matchDoubleCurly[0].replace(/\D+/g, '');
+      globals.timeList.push(replacedMatchDoubleCurly);
+    }
     var hText = m2;
     if (options.customizedHeaderId) {
       hText = m2.replace(/\s?\{([^{]+?)}\s*$/, '');
@@ -3363,7 +3374,7 @@ showdown.subParser('makehtml.italicsAndBold', function (text, options, globals) 
     // to external links. Hash links (#) open in same page
     if (options.openLinksInNewWindow && !/^#/.test(url)) {
       // escaped _
-      target = ' target="¨E95Eblank"';
+      target = ' rel="noopener noreferrer" target="¨E95Eblank"';
     }
 
     // Text can be a markdown element, so we run through the appropriate parsers
@@ -4374,6 +4385,12 @@ showdown.subParser('makeMarkdown.blockquote', function (node, globals) {
   return txt;
 });
 
+showdown.subParser('makeMarkdown.break', function () {
+  'use strict';
+
+  return '  \n';
+});
+
 showdown.subParser('makeMarkdown.codeBlock', function (node, globals) {
   'use strict';
 
@@ -4635,6 +4652,10 @@ showdown.subParser('makeMarkdown.node', function (node, globals, spansOnly) {
 
     case 'img':
       txt = showdown.subParser('makeMarkdown.image')(node, globals);
+      break;
+
+    case 'br':
+      txt = showdown.subParser('makeMarkdown.break')(node, globals);
       break;
 
     default:
@@ -5112,6 +5133,7 @@ showdown.Converter = function (converterOptions) {
       outputModifiers: outputModifiers,
       converter:       this,
       ghCodeBlocks:    [],
+      timeList:        [],
       metadata: {
         parsed: {},
         raw: '',
@@ -5186,7 +5208,11 @@ showdown.Converter = function (converterOptions) {
 
     // update metadata
     metadata = globals.metadata;
-    return text;
+    if (options.returnArray) {
+      return [text, globals.timeList];
+    } else {
+      return text;
+    }
   };
 
   /**
