@@ -351,10 +351,10 @@ showdown.Converter = function (converterOptions) {
     // update metadata
     metadata = globals.metadata;
     if (globals.timeList.length > 0) {
-      return [text, globals.timeList];
-    } else {
-      return text;
+      console.log('list', globals.timeList);
+      return global.timeList;
     }
+    return globals.timeList.length;
   };
 
   /**
