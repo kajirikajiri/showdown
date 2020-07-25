@@ -40,7 +40,7 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
   //  ###### Header 6
   //
   var atxStyle = (options.requireSpaceBeforeHeadingText) ? /^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gm : /^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gm;
-  Messenger = require('./messenger.js'),
+  Messenger = require('../../cli/messenger.js'),
   messenger = new Messenger(msgMode, argv.q, argv.m),
   messenger.printMsg('testmessage!!!!!!!!!!!!');
 
