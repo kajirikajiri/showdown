@@ -275,6 +275,7 @@ showdown.Converter = function (converterOptions) {
       outputModifiers: outputModifiers,
       converter:       this,
       ghCodeBlocks:    [],
+      timeList:        [],
       metadata: {
         parsed: {},
         raw: '',
@@ -349,6 +350,12 @@ showdown.Converter = function (converterOptions) {
 
     // update metadata
     metadata = globals.metadata;
+    // if (globals.timeList.length > 0) {
+    //   console.log(globals.timeList);
+    // }
+    if (options.returnArray) {
+      return [text, globals.timeList];
+    }
     return text;
   };
 

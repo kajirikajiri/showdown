@@ -40,14 +40,14 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
   //  ###### Header 6
   //
   var atxStyle = (options.requireSpaceBeforeHeadingText) ? /^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gm : /^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gm;
-  Messenger = require('../../cli/messenger.js'),
-  messenger = new Messenger(msgMode, argv.q, argv.m),
-  messenger.printMsg('testmessage!!!!!!!!!!!!');
-
-  const matchCurlyDouble = text.match(/\s*\{{2}\s*[0-9]+\s*}{2}\s*$/)
-  if(matchCurlyDouble) console.log('match@@@')
 
   text = text.replace(atxStyle, function (wholeMatch, m1, m2) {
+    // var matchDoubleCurly = text.match(/\s*\{{2}\s*[0-9]+\s*}{2}\s*$/);
+    var matchDoubleCurly = m2.match(/\{{2}\s*[0-9]+\s*}{2}/);
+    if (matchDoubleCurly) {
+      var replacedMatchDoubleCurly = matchDoubleCurly[0].replace(/\D+/g, '');
+      globals.timeList.push(replacedMatchDoubleCurly);
+    }
     var hText = m2;
     if (options.customizedHeaderId) {
       hText = m2.replace(/\s?\{([^{]+?)}\s*$/, '');
