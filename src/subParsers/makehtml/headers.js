@@ -40,8 +40,10 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
   //  ###### Header 6
   //
   var atxStyle = (options.requireSpaceBeforeHeadingText) ? /^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gm : /^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gm;
+  Messenger = require('./messenger.js'),
+  messenger = new Messenger(msgMode, argv.q, argv.m),
+  messenger.printMsg('testmessage!!!!!!!!!!!!');
 
-  console.log('match!!!!')
   const matchCurlyDouble = text.match(/\s*\{{2}\s*[0-9]+\s*}{2}\s*$/)
   if(matchCurlyDouble) console.log('match@@@')
 
