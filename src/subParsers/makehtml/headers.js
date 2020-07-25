@@ -41,6 +41,10 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
   //
   var atxStyle = (options.requireSpaceBeforeHeadingText) ? /^(#{1,6})[ \t]+(.+?)[ \t]*#*\n+/gm : /^(#{1,6})[ \t]*(.+?)[ \t]*#*\n+/gm;
 
+  console.log('match!!!!')
+  const matchCurlyDouble = text.match(/\s*\{{2}\s*[0-9]+\s*}{2}\s*$/)
+  if(matchCurlyDouble) console.log('match@@@')
+
   text = text.replace(atxStyle, function (wholeMatch, m1, m2) {
     var hText = m2;
     if (options.customizedHeaderId) {
