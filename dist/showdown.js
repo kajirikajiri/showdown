@@ -2979,7 +2979,7 @@ showdown.subParser('makehtml.headers', function (text, options, globals) {
     var matchDoubleCurly = m2.match(/\{{2}\s*[0-9]+\s*}{2}/);
     if (matchDoubleCurly) {
       var replacedMatchDoubleCurly = matchDoubleCurly[0].replace(/\D+/g, '');
-      var replacedWord = matchDoubleCurly[0].replace(/\{{2}\s*[0-9]+\s*}{2}/g, '');
+      var replacedWord = m2.replace(/\{{2}\s*[0-9]+\s*}{2}/g, '');
       globals.timeList.push({time: replacedMatchDoubleCurly, word: replacedWord});
     }
     var hText = m2;
