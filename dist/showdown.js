@@ -5210,7 +5210,7 @@ showdown.Converter = function (converterOptions) {
     // update metadata
     metadata = globals.metadata;
     if (options.returnObject) {
-      return {html: text, timeList: globals.timeList};
+      return {htmlString: text, timeList: globals.timeList};
     } else {
       return text;
     }
