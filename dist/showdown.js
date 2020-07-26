@@ -163,7 +163,7 @@ function getDefaultOpts (simple) {
       description: 'Split adjacent blockquote blocks',
       type: 'boolean'
     },
-    returnArray: {
+    returnObject: {
       defaultValue: false,
       description: 'return [text, timeList]',
       type: 'boolean'
@@ -5209,8 +5209,8 @@ showdown.Converter = function (converterOptions) {
 
     // update metadata
     metadata = globals.metadata;
-    if (options.returnArray) {
-      return [text, globals.timeList];
+    if (options.returnObject) {
+      return {text: text, timeList: globals.timeList};
     } else {
       return text;
     }

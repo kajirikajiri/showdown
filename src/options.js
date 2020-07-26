@@ -161,7 +161,7 @@ function getDefaultOpts (simple) {
       description: 'Split adjacent blockquote blocks',
       type: 'boolean'
     },
-    returnArray: {
+    returnObject: {
       defaultValue: false,
       description: 'return [text, timeList]',
       type: 'boolean'
